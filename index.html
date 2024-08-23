@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eustacia Cooks Tamale Delivery</title>
+    <title>Eustacia Cooks Food Delivery</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,15 +47,19 @@
         button:hover {
             background-color: #218838;
         }
+        .total {
+            font-weight: bold;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Eustacia Cooks Tamale Delivery</h1>
-        <p>We deliver fresh homemade tamales to your doorstep! Accepting orders from Thursday and Friday, and deliveries are made on Saturday or Sunday.</p>
+        <h1>Eustacia Cooks Tamales Delivery</h1>
+        <p>We deliver fresh homemade tamales to your doorstep! Accepting orders from Thursday to Sunday, and deliveries are made on Saturday or Sunday.</p>
 
-        <form action="mailto:eustacia.tamaledelivery@gmail.com" method="post" enctype="text/plain">
+        <form id="orderForm" action="mailto:order@eustaciacooks.com" method="post" enctype="text/plain">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -74,12 +78,39 @@
                 <option value="sunday">Sunday</option>
             </select>
 
+            <label for="dozen">Number of Dozens:</label>
+            <input type="number" id="dozen" name="dozen" min="1" value="1" required>
+
             <label for="order-details">Order Details:</label>
-            <textarea id="order-details" name="order-details" rows="4" placeholder="Please specify type of meat (chicken and/or pork) and quantities (# of dozens)" required></textarea>
+            <textarea id="order-details" name="order-details" rows="4" placeholder="Please specify the dishes and quantities" required></textarea>
+
+            <p class="total">Subtotal: $<span id="subtotal">25</span></p>
+            <p class="total">Delivery Fee: $10</p>
+            <p class="total">Total: $<span id="total">35</span></p>
 
             <button type="submit">Submit Order</button>
         </form>
     </div>
+
+    <script>
+        const dozenInput = document.getElementById('dozen');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('total');
+
+        const deliveryFee = 10;
+        const pricePerDozen = 25;
+
+        dozenInput.addEventListener('input', updateTotal);
+
+        function updateTotal() {
+            const numberOfDozens = parseInt(dozenInput.value, 10);
+            const subtotal = numberOfDozens * pricePerDozen;
+            const total = subtotal + deliveryFee;
+
+            subtotalElement.textContent = subtotal;
+            totalElement.textContent = total;
+        }
+    </script>
 
 </body>
 </html>
