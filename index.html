@@ -51,15 +51,21 @@
             font-weight: bold;
             margin-top: 10px;
         }
+        .payment-section {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Eustacia Cooks Tamales Delivery</h1>
+        <h1>Eustacia Cooks Tamale Delivery</h1>
         <p>We deliver fresh homemade tamales to your doorstep! Accepting orders from Thursday to Sunday, and deliveries are made on Saturday or Sunday.</p>
 
-        <form id="orderForm" action="mailto:order@eustaciacooks.com" method="post" enctype="text/plain">
+        <form id="orderForm" action="mailto:eustacia.tamaledelivery@gmail.com" method="post" enctype="text/plain">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -82,11 +88,28 @@
             <input type="number" id="dozen" name="dozen" min="1" value="1" required>
 
             <label for="order-details">Order Details:</label>
-            <textarea id="order-details" name="order-details" rows="4" placeholder="Please specify type of meat (chicken and/or pork)" required></textarea>
+            <textarea id="order-details" name="order-details" rows="4" placeholder="Please specify the dishes and quantities" required></textarea>
 
             <p class="total">Subtotal: $<span id="subtotal">25</span></p>
             <p class="total">Delivery Fee: $10</p>
             <p class="total">Total: $<span id="total">35</span></p>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h3>Choose Your Payment Method</h3>
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method" name="payment-method" required>
+                    <option value="zelle">Zelle</option>
+                    <option value="credit-card">Credit Card</option>
+                    <option value="venmo">Venmo</option>
+                </select>
+
+                <div id="payment-instructions" style="display: none;">
+                    <p id="zelle-info" style="display: none;">Pay via Zelle using this email: <strong>zelle@eustaciacooks.com</strong></p>
+                    <p id="credit-card-info" style="display: none;">Pay via Credit Card: Please call us at (123) 456-7890 to process your payment.</p>
+                    <p id="venmo-info" style="display: none;">Pay via Venmo to: <strong>@EustaciaCooks</strong></p>
+                </div>
+            </div>
 
             <button type="submit">Submit Order</button>
         </form>
@@ -110,6 +133,27 @@
             subtotalElement.textContent = subtotal;
             totalElement.textContent = total;
         }
+
+        const paymentMethodSelect = document.getElementById('payment-method');
+        const paymentInstructions = document.getElementById('payment-instructions');
+        const zelleInfo = document.getElementById('zelle-info');
+        const creditCardInfo = document.getElementById('credit-card-info');
+        const venmoInfo = document.getElementById('venmo-info');
+
+        paymentMethodSelect.addEventListener('change', function () {
+            paymentInstructions.style.display = 'block';
+            zelleInfo.style.display = 'none';
+            creditCardInfo.style.display = 'none';
+            venmoInfo.style.display = 'none';
+
+            if (paymentMethodSelect.value === 'zelle') {
+                zelleInfo.style.display = 'block';
+            } else if (paymentMethodSelect.value === 'credit-card') {
+                creditCardInfo.style.display = 'block';
+            } else if (paymentMethodSelect.value === 'venmo') {
+                venmoInfo.style.display = 'block';
+            }
+        });
     </script>
 
 </body>
